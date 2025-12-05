@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donation DApp</title>
+    <title>Triply Donation DApp</title>
 
     <!-- Load Ethers.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     
-    <!-- Google Fonts for the modern look -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #0a0a0a;
+            --bg-color: #050505;
             --card-bg: #141414;
-            --accent-color: #dfff00; /* The neon lime/yellow from the image */
+            --accent-color: #dfff00; /* Neon Lime */
             --text-color: #ffffff;
             --text-muted: #888888;
+            --border-color: #222;
         }
 
         * {
@@ -33,6 +34,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* --- HEADER --- */
@@ -41,12 +43,13 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 50px;
-            background-color: transparent;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .logo {
@@ -54,20 +57,20 @@
             align-items: center;
             gap: 10px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             letter-spacing: 1px;
         }
 
         .logo-icon {
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
             background-color: var(--accent-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: black;
-            font-size: 14px;
+            font-weight: bold;
         }
 
         nav ul {
@@ -81,100 +84,102 @@
             text-decoration: none;
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
             transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: var(--accent-color);
-        }
+        nav a:hover { color: var(--accent-color); }
 
         .btn-connect {
             padding: 10px 24px;
-            background-color: var(--accent-color);
-            color: black;
-            border: none;
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--text-muted);
             border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
         }
 
         .btn-connect:hover {
-            transform: scale(1.05);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
-        /* --- MID SECTION (Donation Box) --- */
+        /* --- MAIN SECTION --- */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 120px 20px 60px;
+            padding: 140px 20px 80px;
             text-align: center;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 70%);
+            background: radial-gradient(circle at 50% 40%, #1a1a1a 0%, #050505 60%);
         }
 
         h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 10px;
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         h1 span {
             display: block;
             color: var(--text-muted);
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
         }
 
         .donation-box {
-            margin-top: 50px;
+            margin-top: 40px;
             background: var(--card-bg);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 24px;
             width: 100%;
-            max-width: 500px;
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 480px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
         }
 
-        .input-group {
+        .input-wrapper {
+            position: relative;
             margin-bottom: 25px;
-            text-align: left;
         }
 
-        label {
-            display: block;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"] {
+        .input-wrapper input {
             width: 100%;
-            padding: 15px;
-            background: transparent;
-            border: 1px solid #444;
-            border-radius: 10px;
+            padding: 20px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 16px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             outline: none;
+            transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus {
+        .input-wrapper input:focus {
             border-color: var(--accent-color);
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-weight: bold;
         }
 
         .btn-donate {
             width: 100%;
-            padding: 18px;
-            background-color: white;
+            padding: 20px;
+            background-color: var(--accent-color);
             color: black;
             border: none;
             border-radius: 50px;
@@ -184,239 +189,346 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: background 0.3s;
+            gap: 12px;
+            transition: transform 0.2s, background 0.3s;
         }
 
         .btn-donate:hover {
-            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(223, 255, 0, 0.2);
         }
 
-        /* Decorative Arrow Icon styling */
+        .btn-donate:active { transform: translateY(0); }
+
+        .btn-donate.loading {
+            background-color: #555;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .arrow-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             background: black;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
         }
 
-        .admin-section {
-            margin-top: 30px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
+        .admin-link {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #444;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .admin-link:hover { color: var(--accent-color); }
+
+        /* --- POPUP MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
-        .btn-withdraw {
-            background: transparent;
-            border: 1px solid #444;
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .modal-msg {
             color: var(--text-muted);
-            padding: 10px 20px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .btn-modal {
+            padding: 12px 30px;
+            background: white;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-weight: 600;
         }
-        .btn-withdraw:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
+        .btn-modal:hover { background: #ddd; }
 
         /* --- FOOTER --- */
         footer {
-            background-color: #050505;
-            padding: 60px 50px 30px;
-            border-top: 1px solid #222;
+            background-color: #080808;
+            padding: 80px 50px 30px;
+            border-top: 1px solid #1a1a1a;
         }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 60px;
         }
 
         .footer-col h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
-        .footer-col p {
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a {
             color: var(--text-muted);
-            max-width: 300px;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col ul li a:hover { color: white; }
+
+        /* Newsletter Input */
+        .newsletter-box {
+            display: flex;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 50px;
+            padding: 5px;
+        }
+        .newsletter-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            outline: none;
+        }
+        .newsletter-box button {
+            background: var(--accent-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
         .footer-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 20px;
-            border-top: 1px solid #222;
-            color: #555;
+            padding-top: 30px;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
             font-size: 0.8rem;
         }
 
-        .social-icons span {
-            margin-left: 15px;
-            cursor: pointer;
-        }
-
         @media (max-width: 768px) {
-            header { padding: 20px; }
-            h1 { font-size: 2.5rem; }
-            .footer-content { flex-direction: column; gap: 30px; }
+            h1 { font-size: 2.8rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SECTION 1: HEADER -->
+    <!-- Header -->
     <header>
         <div class="logo">
-            <div class="logo-icon">D</div>
-            DONATELY
+            <div class="logo-icon">T</div>
+            TRIPLY
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="#">Packages</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Campaigns</a></li>
             </ul>
         </nav>
-        <!-- Connect button moved here -->
-        <button class="btn-connect" onclick="connectWallet()">Connect Wallet</button>
+        <button id="connectBtn" class="btn-connect" onclick="connectWallet()">Connect Wallet</button>
     </header>
 
-    <!-- SECTION 2: MID (DONATION BOX) -->
+    <!-- Mid Section -->
     <main>
         <h1>
-            <span>SUPPORT THE FUTURE</span>
-            GIVE BEYOND<br>BOUNDARIES
+            <span>Invest In Memories</span>
+            TRAVEL BEYOND<br>BOUNDARIES
         </h1>
 
         <div class="donation-box">
-            <div class="input-group">
-                <label for="amount">Enter Amount (ETH)</label>
-                <input id="amount" type="text" placeholder="0.01">
+            <div class="input-wrapper">
+                <input id="amount" type="text" placeholder="0.00">
+                <span>ETH</span>
             </div>
 
-            <button class="btn-donate" onclick="donate()">
-                Donate Now 
+            <button id="donateBtn" class="btn-donate" onclick="donate()">
+                <span id="btnText">Donate Now</span>
                 <div class="arrow-icon">↗</div>
             </button>
 
-            <!-- Admin Section hidden slightly -->
-            <div class="admin-section">
-                <button class="btn-withdraw" onclick="withdraw()">Withdraw Funds (Owner Only)</button>
-            </div>
+            <!-- Hidden Admin trigger -->
+            <div class="admin-link" onclick="withdraw()">Owner Withdrawal</div>
         </div>
     </main>
 
-    <!-- SECTION 3: FOOTER -->
+    <!-- Footer -->
     <footer>
-        <div class="footer-content">
+        <div class="footer-grid">
             <div class="footer-col">
                 <h3>Create Memories<br>With Us</h3>
+                <p style="color: #666; max-width: 300px; margin-top:10px;">
+                    We make your journey transparent and secure using blockchain technology.
+                </p>
             </div>
+            
             <div class="footer-col">
-                <p>We leverage blockchain technology to ensure your donations reach their destination securely and transparently.</p>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Tour Packages</a></li>
+                    <li><a href="#">Travel Insurance</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Stay Updated</h4>
+                <p style="color:#666; margin-bottom:15px; font-size:0.9rem;">Get the latest travel deals and crypto news.</p>
+                <div class="newsletter-box">
+                    <input type="email" placeholder="Email Address">
+                    <button>&#10140;</button>
+                </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <div>© 2024 Donately DApp. All rights reserved.</div>
-            <div class="social-icons">
+            <div>© 2024 Triply DApp. All rights reserved.</div>
+            <div style="display:flex; gap:15px;">
+                <span>Insta</span>
                 <span>Twitter</span>
-                <span>Discord</span>
-                <span>GitHub</span>
+                <span>Fb</span>
             </div>
         </div>
     </footer>
 
-    <!-- EXISTING JAVASCRIPT LOGIC (UNCHANGED) -->
+    <!-- CUSTOM POPUP MODAL -->
+    <div id="popupModal" class="modal-overlay">
+        <div class="modal-box">
+            <div id="modalIcon" class="modal-icon">✅</div>
+            <h2 id="modalTitle" class="modal-title">Success</h2>
+            <p id="modalMsg" class="modal-msg">Transaction completed successfully.</p>
+            <button class="btn-modal" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
 
     let provider;
     let signer;
     let contract;
 
-    // --------------------------------------
-    //  Your Contract Details
-    // --------------------------------------
-    const contractAddress = "0xd6aa384d4B5C67884B2d8D91D581b7DafcE478C1";   // <--- CHANGE THIS
+    // --- CONTRACT CONFIG ---
+    const contractAddress = "0xd6aa384d4B5C67884B2d8D91D581b7DafcE478C1";
     const contractABI = [
-        {
-            "inputs": [],
-            "name": "donate",
-            "outputs": [],
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "inputs": [],
-            "name": "withdraw",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "getBalance",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "owner",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "totalDonations",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
-    ];                      // <--- CHANGE THIS
+        { "inputs": [], "name": "donate", "outputs": [], "stateMutability": "payable", "type": "function" },
+        { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+        { "inputs": [], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+        { "inputs": [], "name": "getBalance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+        { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
+        { "inputs": [], "name": "totalDonations", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }
+    ];
 
-    // --------------------------------------
-    //  Connect Wallet Function
-    // --------------------------------------
+    // --- UI HELPER FUNCTIONS ---
+
+    function showPopup(type, title, message) {
+        const modal = document.getElementById('popupModal');
+        const icon = document.getElementById('modalIcon');
+        const titleEl = document.getElementById('modalTitle');
+        const msgEl = document.getElementById('modalMsg');
+
+        modal.classList.add('active');
+        titleEl.innerText = title;
+        msgEl.innerText = message;
+
+        if(type === 'success') {
+            icon.innerText = '🎉';
+            icon.style.textShadow = "0 0 20px #dfff00";
+        } else if (type === 'error') {
+            icon.innerText = '⚠️';
+            icon.style.textShadow = "0 0 20px red";
+        } else {
+            icon.innerText = '⏳';
+        }
+    }
+
+    function closePopup() {
+        document.getElementById('popupModal').classList.remove('active');
+    }
+
+    function setLoading(isLoading, btnId, originalText) {
+        const btn = document.getElementById(btnId);
+        const textSpan = document.getElementById('btnText'); // specific to donate btn
+        
+        if (isLoading) {
+            btn.classList.add('loading');
+            if(textSpan) textSpan.innerText = "Processing...";
+            else btn.innerText = "Processing...";
+        } else {
+            btn.classList.remove('loading');
+            if(textSpan) textSpan.innerText = originalText;
+            else btn.innerText = originalText;
+        }
+    }
+
+    // --- BLOCKCHAIN FUNCTIONS ---
+
     async function connectWallet() {
         if (!window.ethereum) {
-            alert("MetaMask is not installed!");
+            showPopup('error', 'Metamask Missing', 'Please install MetaMask to use this DApp.');
             return;
         }
 
@@ -426,56 +538,82 @@
             signer = provider.getSigner();
 
             const userAddress = await signer.getAddress();
-            alert("Wallet Connected: " + userAddress);
+            
+            // Visual Update
+            const shortAddr = userAddress.substring(0, 6) + "..." + userAddress.substring(38);
+            document.getElementById('connectBtn').innerText = shortAddr;
+            document.getElementById('connectBtn').style.borderColor = "#dfff00";
+            document.getElementById('connectBtn').style.color = "#dfff00";
 
             contract = new ethers.Contract(contractAddress, contractABI, signer);
+            
+            showPopup('success', 'Connected', 'Wallet connected successfully!');
 
         } catch (err) {
             console.error(err);
-            alert("Wallet connection failed");
+            showPopup('error', 'Connection Failed', err.message);
         }
     }
 
-    // --------------------------------------
-    //  Donate Function
-    // --------------------------------------
     async function donate() {
-        if (!contract) return alert("Connect wallet first!");
+        if (!contract) {
+            showPopup('error', 'Wallet Locked', 'Please connect your wallet first.');
+            return;
+        }
 
-        let ethValue = document.getElementById("amount").value;
+        let inputField = document.getElementById("amount");
+        let ethValue = inputField.value;
+
+        if (!ethValue || parseFloat(ethValue) <= 0) {
+            showPopup('error', 'Invalid Amount', 'Please enter a valid ETH amount.');
+            return;
+        }
+
+        setLoading(true, 'donateBtn', 'Donate Now');
 
         try {
             let tx = await contract.donate({
                 value: ethers.utils.parseEther(ethValue)
             });
 
-            alert("Transaction Sent! Hash: " + tx.hash);
+            // 1. Transaction Sent - Clear Input immediately
+            inputField.value = "";
+            
+            // 2. Show Tx Hash Popup immediately
+            showPopup('success', 'Transaction Sent', 'Hash: ' + tx.hash.substring(0, 20) + '...');
 
+            // 3. Wait for confirmation in background
             await tx.wait();
-            alert("Donation Successful!");
+            
+            // 4. Update Popup to confirmed
+            showPopup('success', 'Donation Confirmed!', 'Thank you for your contribution.');
 
         } catch (err) {
             console.error(err);
-            alert("Donation Failed!");
+            // Handle user rejection vs error
+            if(err.code === 4001) {
+                showPopup('error', 'Rejected', 'Transaction rejected by user.');
+            } else {
+                showPopup('error', 'Failed', 'Transaction failed. Check console.');
+            }
+        } finally {
+            setLoading(false, 'donateBtn', 'Donate Now');
         }
     }
 
-    // --------------------------------------
-    //  Withdraw Function (Owner Only)
-    // --------------------------------------
     async function withdraw() {
-        if (!contract) return alert("Connect wallet first!");
+        if (!contract) return showPopup('error', 'Error', 'Connect wallet first!');
 
         try {
             let tx = await contract.withdraw();
-            alert("Withdraw Transaction: " + tx.hash);
-
+            showPopup('success', 'Processing', 'Withdrawal initiated: ' + tx.hash.substring(0,15) + '...');
+            
             await tx.wait();
-            alert("Funds Withdrawn!");
+            showPopup('success', 'Withdrawn', 'Funds successfully withdrawn to owner.');
 
         } catch (err) {
             console.error(err);
-            alert("Withdraw Failed!");
+            showPopup('error', 'Failed', 'Withdrawal failed. Are you the owner?');
         }
     }
 
