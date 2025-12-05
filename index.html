@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Triply Donation DApp</title>
+    <title>NEXUS | Web3 Venture Fund</title>
 
     <!-- Load Ethers.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
@@ -58,14 +58,14 @@
             gap: 10px;
             font-weight: 700;
             font-size: 1.4rem;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .logo-icon {
             width: 30px;
             height: 30px;
             background-color: var(--accent-color);
-            border-radius: 50%;
+            border-radius: 4px; /* Squared off for tech look */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -82,9 +82,10 @@
         nav a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             transition: color 0.3s;
+            letter-spacing: 1px;
         }
 
         nav a:hover { color: var(--accent-color); }
@@ -94,15 +95,19 @@
             background-color: transparent;
             color: var(--text-color);
             border: 1px solid var(--text-muted);
-            border-radius: 30px;
+            border-radius: 4px; /* Tech look */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-connect:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(223, 255, 0, 0.1);
         }
 
         /* --- MAIN SECTION --- */
@@ -118,26 +123,35 @@
         }
 
         h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             line-height: 1;
             margin-bottom: 20px;
             text-transform: uppercase;
+            letter-spacing: -1px;
         }
 
         h1 span {
             display: block;
-            color: var(--text-muted);
-            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-size: 1rem;
             font-weight: 400;
             letter-spacing: 4px;
             margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .donation-box {
-            margin-top: 40px;
             background: var(--card-bg);
             padding: 40px;
-            border-radius: 24px;
+            border-radius: 16px;
             width: 100%;
             max-width: 480px;
             border: 1px solid var(--border-color);
@@ -156,11 +170,12 @@
             padding: 20px;
             background: #0a0a0a;
             border: 1px solid #333;
-            border-radius: 16px;
+            border-radius: 8px;
             color: white;
             font-size: 1.2rem;
             outline: none;
             transition: border-color 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         .input-wrapper input:focus {
@@ -174,6 +189,7 @@
             transform: translateY(-50%);
             color: var(--text-muted);
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .btn-donate {
@@ -182,23 +198,23 @@
             background-color: var(--accent-color);
             color: black;
             border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: transform 0.2s, background 0.3s;
         }
 
         .btn-donate:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(223, 255, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(223, 255, 0, 0.2);
         }
-
-        .btn-donate:active { transform: translateY(0); }
 
         .btn-donate.loading {
             background-color: #555;
@@ -207,23 +223,24 @@
         }
 
         .arrow-icon {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             background: black;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 10px;
         }
 
         .admin-link {
             margin-top: 20px;
-            font-size: 0.8rem;
-            color: #444;
+            font-size: 0.75rem;
+            color: #333;
             cursor: pointer;
-            text-decoration: underline;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .admin-link:hover { color: var(--accent-color); }
 
@@ -232,7 +249,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -240,7 +257,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .modal-overlay.active {
@@ -249,15 +266,16 @@
         }
 
         .modal-box {
-            background: var(--card-bg);
+            background: #111;
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 12px;
             width: 90%;
             max-width: 400px;
             text-align: center;
-            border: 1px solid var(--border-color);
+            border: 1px solid #333;
             transform: translateY(20px);
             transition: transform 0.3s ease;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
         .modal-overlay.active .modal-box {
@@ -270,15 +288,17 @@
         }
 
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 10px;
             color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .modal-msg {
             color: var(--text-muted);
             margin-bottom: 25px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             word-break: break-all;
         }
 
@@ -286,11 +306,12 @@
             padding: 12px 30px;
             background: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
         }
-        .btn-modal:hover { background: #ddd; }
+        .btn-modal:hover { background: var(--accent-color); color: black; }
 
         /* --- FOOTER --- */
         footer {
@@ -307,16 +328,18 @@
         }
 
         .footer-col h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 20px;
             text-transform: uppercase;
-            line-height: 1.2;
+            letter-spacing: 1px;
         }
 
         .footer-col h4 {
             color: white;
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .footer-col ul { list-style: none; }
@@ -325,6 +348,7 @@
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.2s;
+            font-size: 0.9rem;
         }
         .footer-col ul li a:hover { color: white; }
 
@@ -333,7 +357,7 @@
             display: flex;
             background: #111;
             border: 1px solid #333;
-            border-radius: 50px;
+            border-radius: 4px;
             padding: 5px;
         }
         .newsletter-box input {
@@ -343,13 +367,14 @@
             padding: 10px 20px;
             color: white;
             outline: none;
+            font-size: 0.9rem;
         }
         .newsletter-box button {
             background: var(--accent-color);
             border: none;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 4px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -364,11 +389,13 @@
             padding-top: 30px;
             border-top: 1px solid #1a1a1a;
             color: #444;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
+            h1 { font-size: 2.5rem; }
             .footer-grid { grid-template-columns: 1fr; }
             header { padding: 15px 20px; }
         }
@@ -379,13 +406,14 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <div class="logo-icon">T</div>
-            TRIPLY
+            <div class="logo-icon">N</div>
+            NEXUS
         </div>
         <nav>
             <ul>
-                <li><a href="#">Packages</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="#">Mission</a></li>
+                <li><a href="#">Roadmap</a></li>
+                <li><a href="#">Vision</a></li>
             </ul>
         </nav>
         <button id="connectBtn" class="btn-connect" onclick="connectWallet()">Connect Wallet</button>
@@ -394,23 +422,28 @@
     <!-- Mid Section -->
     <main>
         <h1>
-            <span>Invest In Memories</span>
-            TRAVEL BEYOND<br>BOUNDARIES
+            <span>The Future is Here</span>
+            Empower The<br>Generation
         </h1>
+        
+        <p class="subtitle">
+            Join the collective of visionaries building the next era of decentralization. 
+            Your contribution fuels the infrastructure of tomorrow.
+        </p>
 
         <div class="donation-box">
             <div class="input-wrapper">
-                <input id="amount" type="text" placeholder="0.00">
+                <input id="amount" type="text" placeholder="0.50">
                 <span>ETH</span>
             </div>
 
             <button id="donateBtn" class="btn-donate" onclick="donate()">
-                <span id="btnText">Donate Now</span>
+                <span id="btnText">Back This Project</span>
                 <div class="arrow-icon">↗</div>
             </button>
 
             <!-- Hidden Admin trigger -->
-            <div class="admin-link" onclick="withdraw()">Owner Withdrawal</div>
+            <div class="admin-link" onclick="withdraw()">Contract Withdrawal</div>
         </div>
     </main>
 
@@ -418,38 +451,38 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h3>Create Memories<br>With Us</h3>
-                <p style="color: #666; max-width: 300px; margin-top:10px;">
-                    We make your journey transparent and secure using blockchain technology.
+                <h3>Nexus Protocol</h3>
+                <p style="color: #666; max-width: 300px; margin-top:10px; font-size: 0.9rem;">
+                    We are an open-source initiative dedicated to transparent funding for Web3 innovation.
                 </p>
             </div>
             
             <div class="footer-col">
-                <h4>Quick Links</h4>
+                <h4>Ecosystem</h4>
                 <ul>
-                    <li><a href="#">Destinations</a></li>
-                    <li><a href="#">Tour Packages</a></li>
-                    <li><a href="#">Travel Insurance</a></li>
-                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Whitepaper</a></li>
+                    <li><a href="#">Governance</a></li>
+                    <li><a href="#">Smart Contracts</a></li>
+                    <li><a href="#">Audit Report</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Stay Updated</h4>
-                <p style="color:#666; margin-bottom:15px; font-size:0.9rem;">Get the latest travel deals and crypto news.</p>
+                <h4>Join the Vanguard</h4>
+                <p style="color:#666; margin-bottom:15px; font-size:0.9rem;">Receive updates on project milestones.</p>
                 <div class="newsletter-box">
-                    <input type="email" placeholder="Email Address">
+                    <input type="email" placeholder="Enter your email">
                     <button>&#10140;</button>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <div>© 2024 Triply DApp. All rights reserved.</div>
-            <div style="display:flex; gap:15px;">
-                <span>Insta</span>
-                <span>Twitter</span>
-                <span>Fb</span>
+            <div>© 2024 Nexus Foundation.</div>
+            <div style="display:flex; gap:20px;">
+                <span style="cursor:pointer">Twitter</span>
+                <span style="cursor:pointer">Discord</span>
+                <span style="cursor:pointer">GitHub</span>
             </div>
         </div>
     </footer>
@@ -460,7 +493,7 @@
             <div id="modalIcon" class="modal-icon">✅</div>
             <h2 id="modalTitle" class="modal-title">Success</h2>
             <p id="modalMsg" class="modal-msg">Transaction completed successfully.</p>
-            <button class="btn-modal" onclick="closePopup()">Close</button>
+            <button class="btn-modal" onclick="closePopup()">Continue</button>
         </div>
     </div>
 
@@ -495,13 +528,13 @@
         msgEl.innerText = message;
 
         if(type === 'success') {
-            icon.innerText = '🎉';
+            icon.innerText = '🚀';
             icon.style.textShadow = "0 0 20px #dfff00";
         } else if (type === 'error') {
             icon.innerText = '⚠️';
             icon.style.textShadow = "0 0 20px red";
         } else {
-            icon.innerText = '⏳';
+            icon.innerText = '⚡';
         }
     }
 
@@ -511,12 +544,12 @@
 
     function setLoading(isLoading, btnId, originalText) {
         const btn = document.getElementById(btnId);
-        const textSpan = document.getElementById('btnText'); // specific to donate btn
+        const textSpan = document.getElementById('btnText'); 
         
         if (isLoading) {
             btn.classList.add('loading');
-            if(textSpan) textSpan.innerText = "Processing...";
-            else btn.innerText = "Processing...";
+            if(textSpan) textSpan.innerText = "Initiating...";
+            else btn.innerText = "Initiating...";
         } else {
             btn.classList.remove('loading');
             if(textSpan) textSpan.innerText = originalText;
@@ -528,7 +561,7 @@
 
     async function connectWallet() {
         if (!window.ethereum) {
-            showPopup('error', 'Metamask Missing', 'Please install MetaMask to use this DApp.');
+            showPopup('error', 'Wallet Not Found', 'Please install MetaMask to interact with Nexus.');
             return;
         }
 
@@ -547,17 +580,17 @@
 
             contract = new ethers.Contract(contractAddress, contractABI, signer);
             
-            showPopup('success', 'Connected', 'Wallet connected successfully!');
+            showPopup('success', 'System Online', 'Wallet successfully synchronized.');
 
         } catch (err) {
             console.error(err);
-            showPopup('error', 'Connection Failed', err.message);
+            showPopup('error', 'Sync Failed', err.message);
         }
     }
 
     async function donate() {
         if (!contract) {
-            showPopup('error', 'Wallet Locked', 'Please connect your wallet first.');
+            showPopup('error', 'Access Denied', 'Please connect your wallet first.');
             return;
         }
 
@@ -565,39 +598,38 @@
         let ethValue = inputField.value;
 
         if (!ethValue || parseFloat(ethValue) <= 0) {
-            showPopup('error', 'Invalid Amount', 'Please enter a valid ETH amount.');
+            showPopup('error', 'Invalid Entry', 'Please enter a valid ETH amount.');
             return;
         }
 
-        setLoading(true, 'donateBtn', 'Donate Now');
+        setLoading(true, 'donateBtn', 'Back This Project');
 
         try {
             let tx = await contract.donate({
                 value: ethers.utils.parseEther(ethValue)
             });
 
-            // 1. Transaction Sent - Clear Input immediately
+            // 1. Clear Input
             inputField.value = "";
             
-            // 2. Show Tx Hash Popup immediately
-            showPopup('success', 'Transaction Sent', 'Hash: ' + tx.hash.substring(0, 20) + '...');
+            // 2. Show Tx Hash
+            showPopup('success', 'Transfer Initiated', 'Hash: ' + tx.hash.substring(0, 16) + '...');
 
-            // 3. Wait for confirmation in background
+            // 3. Wait for confirmation
             await tx.wait();
             
-            // 4. Update Popup to confirmed
-            showPopup('success', 'Donation Confirmed!', 'Thank you for your contribution.');
+            // 4. Update Popup
+            showPopup('success', 'Funding Confirmed', 'Your contribution has been recorded on the blockchain.');
 
         } catch (err) {
             console.error(err);
-            // Handle user rejection vs error
             if(err.code === 4001) {
-                showPopup('error', 'Rejected', 'Transaction rejected by user.');
+                showPopup('error', 'Cancelled', 'Transaction request was rejected.');
             } else {
-                showPopup('error', 'Failed', 'Transaction failed. Check console.');
+                showPopup('error', 'Network Error', 'Transaction failed. Check console.');
             }
         } finally {
-            setLoading(false, 'donateBtn', 'Donate Now');
+            setLoading(false, 'donateBtn', 'Back This Project');
         }
     }
 
@@ -609,11 +641,11 @@
             showPopup('success', 'Processing', 'Withdrawal initiated: ' + tx.hash.substring(0,15) + '...');
             
             await tx.wait();
-            showPopup('success', 'Withdrawn', 'Funds successfully withdrawn to owner.');
+            showPopup('success', 'Funds Secured', 'Liquidity successfully moved to owner wallet.');
 
         } catch (err) {
             console.error(err);
-            showPopup('error', 'Failed', 'Withdrawal failed. Are you the owner?');
+            showPopup('error', 'Access Denied', 'Withdrawal failed. Are you the owner?');
         }
     }
 
