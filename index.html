@@ -1,184 +1,485 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donation DApp</title>
 
     <!-- Load Ethers.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    
+    <!-- Google Fonts for the modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial;
-            background: #111;
-            color: white;
-            text-align: center;
-            padding-top: 50px;
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --accent-color: #dfff00; /* The neon lime/yellow from the image */
+            --text-color: #ffffff;
+            --text-muted: #888888;
         }
-        button {
-            padding: 10px 18px;
-            margin: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 8px;
-            border: none;
-            background: #ff8c00;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: transparent;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: black;
+            font-size: 14px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-connect {
+            padding: 10px 24px;
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-connect:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- MID SECTION (Donation Box) --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 20px 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 70%);
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h1 span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .donation-box {
+            margin-top: 50px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-donate {
+            width: 100%;
+            padding: 18px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-donate:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Decorative Arrow Icon styling */
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+            background: black;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .admin-section {
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        .btn-withdraw {
+            background: transparent;
+            border: 1px solid #444;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-withdraw:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #050505;
+            padding: 60px 50px 30px;
+            border-top: 1px solid #222;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        .social-icons span {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            h1 { font-size: 2.5rem; }
+            .footer-content { flex-direction: column; gap: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Donation Smart Contract</h1>
+    <!-- SECTION 1: HEADER -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            DONATELY
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Campaigns</a></li>
+            </ul>
+        </nav>
+        <!-- Connect button moved here -->
+        <button class="btn-connect" onclick="connectWallet()">Connect Wallet</button>
+    </header>
 
-    <button onclick="connectWallet()">Connect Wallet</button>
-    <br><br>
+    <!-- SECTION 2: MID (DONATION BOX) -->
+    <main>
+        <h1>
+            <span>SUPPORT THE FUTURE</span>
+            GIVE BEYOND<br>BOUNDARIES
+        </h1>
 
-    <input id="amount" type="text" placeholder="Enter ETH to donate">
-    <button onclick="donate()">Donate</button>
-    <br><br>
+        <div class="donation-box">
+            <div class="input-group">
+                <label for="amount">Enter Amount (ETH)</label>
+                <input id="amount" type="text" placeholder="0.01">
+            </div>
 
-    <button onclick="withdraw()">Withdraw (Owner Only)</button>
+            <button class="btn-donate" onclick="donate()">
+                Donate Now 
+                <div class="arrow-icon">↗</div>
+            </button>
 
-<script>
+            <!-- Admin Section hidden slightly -->
+            <div class="admin-section">
+                <button class="btn-withdraw" onclick="withdraw()">Withdraw Funds (Owner Only)</button>
+            </div>
+        </div>
+    </main>
 
-let provider;
-let signer;
-let contract;
+    <!-- SECTION 3: FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Create Memories<br>With Us</h3>
+            </div>
+            <div class="footer-col">
+                <p>We leverage blockchain technology to ensure your donations reach their destination securely and transparently.</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div>© 2024 Donately DApp. All rights reserved.</div>
+            <div class="social-icons">
+                <span>Twitter</span>
+                <span>Discord</span>
+                <span>GitHub</span>
+            </div>
+        </div>
+    </footer>
 
-// --------------------------------------
-//  Your Contract Details
-// --------------------------------------
-const contractAddress = "0xd6aa384d4B5C67884B2d8D91D581b7DafcE478C1";   // <--- CHANGE THIS
-const contractABI = [
-	{
-		"inputs": [],
-		"name": "donate",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getBalance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "totalDonations",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-];                      // <--- CHANGE THIS
+    <!-- EXISTING JAVASCRIPT LOGIC (UNCHANGED) -->
+    <script>
 
-// --------------------------------------
-//  Connect Wallet Function
-// --------------------------------------
-async function connectWallet() {
-    if (!window.ethereum) {
-        alert("MetaMask is not installed!");
-        return;
+    let provider;
+    let signer;
+    let contract;
+
+    // --------------------------------------
+    //  Your Contract Details
+    // --------------------------------------
+    const contractAddress = "0xd6aa384d4B5C67884B2d8D91D581b7DafcE478C1";   // <--- CHANGE THIS
+    const contractABI = [
+        {
+            "inputs": [],
+            "name": "donate",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [],
+            "name": "withdraw",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getBalance",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "totalDonations",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];                      // <--- CHANGE THIS
+
+    // --------------------------------------
+    //  Connect Wallet Function
+    // --------------------------------------
+    async function connectWallet() {
+        if (!window.ethereum) {
+            alert("MetaMask is not installed!");
+            return;
+        }
+
+        try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            signer = provider.getSigner();
+
+            const userAddress = await signer.getAddress();
+            alert("Wallet Connected: " + userAddress);
+
+            contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        } catch (err) {
+            console.error(err);
+            alert("Wallet connection failed");
+        }
     }
 
-    try {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        signer = provider.getSigner();
+    // --------------------------------------
+    //  Donate Function
+    // --------------------------------------
+    async function donate() {
+        if (!contract) return alert("Connect wallet first!");
 
-        const userAddress = await signer.getAddress();
-        alert("Wallet Connected: " + userAddress);
+        let ethValue = document.getElementById("amount").value;
 
-        contract = new ethers.Contract(contractAddress, contractABI, signer);
+        try {
+            let tx = await contract.donate({
+                value: ethers.utils.parseEther(ethValue)
+            });
 
-    } catch (err) {
-        console.error(err);
-        alert("Wallet connection failed");
+            alert("Transaction Sent! Hash: " + tx.hash);
+
+            await tx.wait();
+            alert("Donation Successful!");
+
+        } catch (err) {
+            console.error(err);
+            alert("Donation Failed!");
+        }
     }
-}
 
-// --------------------------------------
-//  Donate Function
-// --------------------------------------
-async function donate() {
-    if (!contract) return alert("Connect wallet first!");
+    // --------------------------------------
+    //  Withdraw Function (Owner Only)
+    // --------------------------------------
+    async function withdraw() {
+        if (!contract) return alert("Connect wallet first!");
 
-    let ethValue = document.getElementById("amount").value;
+        try {
+            let tx = await contract.withdraw();
+            alert("Withdraw Transaction: " + tx.hash);
 
-    try {
-        let tx = await contract.donate({
-            value: ethers.utils.parseEther(ethValue)
-        });
+            await tx.wait();
+            alert("Funds Withdrawn!");
 
-        alert("Transaction Sent! Hash: " + tx.hash);
-
-        await tx.wait();
-        alert("Donation Successful!");
-
-    } catch (err) {
-        console.error(err);
-        alert("Donation Failed!");
+        } catch (err) {
+            console.error(err);
+            alert("Withdraw Failed!");
+        }
     }
-}
 
-// --------------------------------------
-//  Withdraw Function (Owner Only)
-// --------------------------------------
-async function withdraw() {
-    if (!contract) return alert("Connect wallet first!");
-
-    try {
-        let tx = await contract.withdraw();
-        alert("Withdraw Transaction: " + tx.hash);
-
-        await tx.wait();
-        alert("Funds Withdrawn!");
-
-    } catch (err) {
-        console.error(err);
-        alert("Withdraw Failed!");
-    }
-}
-
-</script>
+    </script>
 
 </body>
 </html>
